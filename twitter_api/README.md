@@ -9,7 +9,7 @@
 #### POST oauth2/invalidate_token
 #### POST oauth2/token
 ## Accounts and users
-### [Create and manage lists](cmlist.md)
+### [Create and manage lists](cmlist.md#create-and-manage-lists)
 #### GET lists/list
 #### GET lists/members
 #### GET lists/members/show

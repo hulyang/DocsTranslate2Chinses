@@ -6,4 +6,4 @@ Translate foreign docs to Chinese.
 
 ## [NIO-教程](https://github.com/hulyang/nio-tutorial/blob/master/README.md)
 
-## [TwitterAPI](twitter_api/index.md)
+## [TwitterAPI](twitter_api/README.md)
