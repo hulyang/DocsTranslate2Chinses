@@ -10,8 +10,8 @@
 #### POST oauth2/token
 ## Accounts and users
 ### [Create and manage lists](cmlist.md#create-and-manage-lists)
-#### GET lists/list
-#### GET lists/members
+#### [GET lists/list](cmlist.md#listslist)
+#### [GET lists/members](cmlist.md#listsmembers)
 #### GET lists/members/show
 #### GET lists/memberships
 #### GET lists/ownerships
@@ -20,7 +20,7 @@
 #### GET lists/subscribers
 #### GET lists/subscribers/show
 #### GET lists/subscriptions
-#### [POST lists/create](cmlist.md#listsstatuses)
+#### [POST lists/create](cmlist.md#listscreate)
 #### [POST lists/destroy](cmlist.md#listsdestroy)
 #### POST lists/members/create
 #### POST lists/members/create_all

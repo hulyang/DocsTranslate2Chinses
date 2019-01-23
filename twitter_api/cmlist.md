@@ -1,24 +1,299 @@
 # Create and manage lists
-* [lists/show](#listsshow)
+<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+* [lists/list](#listslist)
 	* [接口资源信息](#接口资源信息)
 	* [参数信息](#参数信息)
 	* [响应内容](#响应内容)
-* [lists/statuses](#listsstatuses)
+* [lists/members](#listsmembers)
 	* [接口资源信息](#接口资源信息-1)
 	* [参数信息](#参数信息-1)
-	* [响应内容](#响应内容-1)
-* [lists/create](#listscreate)
+* [lists/show](#listsshow)
 	* [接口资源信息](#接口资源信息-2)
 	* [参数信息](#参数信息-2)
-	* [响应内容](#响应内容-2)
-* [lists/destroy](#listsdestroy)
+	* [响应内容](#响应内容-1)
+* [lists/statuses](#listsstatuses)
 	* [接口资源信息](#接口资源信息-3)
 	* [参数信息](#参数信息-3)
-	* [响应内容](#响应内容-3)
-* [lists/update](#listsupdate)
+	* [响应内容](#响应内容-2)
+* [lists/create](#listscreate)
 	* [接口资源信息](#接口资源信息-4)
 	* [参数信息](#参数信息-4)
+	* [响应内容](#响应内容-3)
+* [lists/destroy](#listsdestroy)
+	* [接口资源信息](#接口资源信息-5)
+	* [参数信息](#参数信息-5)
 	* [响应内容](#响应内容-4)
+* [lists/update](#listsupdate)
+	* [接口资源信息](#接口资源信息-6)
+	* [参数信息](#参数信息-6)
+	* [响应内容](#响应内容-5)
+
+<!-- /code_chunk_output -->
+
+
+## lists/list
+
+返回认证用户拥有的和订阅的所有list。使用`user_id`或`screen_name`参数来指明用户。如果没指明用户，则返回认证信息的用户。
+
+一次调用最多返回100条结果。订阅的list返回优先级高于用户所拥有的list。那就意味着如果一个用户订阅了90个list且拥有20个list，调用这一接口将会返回90个订阅以及10个拥有的list。`reverse`参数则是用来反转返回优先级的，所以设置`reverse=true`，则将会返回20个拥有的以及80个订阅的list。如果你是只想要获得用户的所拥有的list或是只想要获得用户的所订阅的list，则使用[GET lists/ownerships](#listsownerships)或是[GET lists/subscriptions](#listssubscriptions)。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-list
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/lists/list.json|
+|:------|:-----|
+|Method|GET|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/15-min (user auth)|15|
+|请求次数/15-min (app ahth)|15|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|user_id|可选|获取list的用户id。当用户id与昵称相同时，有助于消除歧义||
+|screen_name|可选|获取list的用户昵称。当用户id与昵称相同时，有助于消除歧义||
+|reverse|可选|优先级反转<br/>默认订阅优先，当`reverse=true`时拥有的list优先||
+
+### 响应内容
+
+指定用户所订阅以及所拥有的全部list详细信息(JSON数组)。
+```
+[
+  {
+    "slug": "meetup-20100301",
+    "name": "meetup-20100301",
+    "created_at": "Sat Feb 27 21:39:24 +0000 2010",
+    "uri": "/twitterapi/meetup-20100301",
+    "subscriber_count": 147,
+    "id_str": "8044403",
+    "member_count": 116,
+    "mode": "public",
+    "id": 8044403,
+    "full_name": "@twitterapi/meetup-20100301",
+    "description": "Guests attending the Twitter meetup on 1 March 2010 at the @twoffice",
+    "user": {
+      "profile_background_tile": true,
+      "profile_sidebar_border_color": "C0DEED",
+      "name": "Twitter API",
+      "profile_sidebar_fill_color": "DDEEF6",
+      "location": "San Francisco, CA",
+      "created_at": "Wed May 23 06:01:13 +0000 2007",
+      "profile_image_url": "http://a0.twimg.com/profile_images/2284174872/7df3h38zabcvjylnyfe3_normal.png",
+      "is_translator": false,
+      "id_str": "6253282",
+      "profile_link_color": "0084B4",
+      "follow_request_sent": false,
+      "favourites_count": 25,
+      "contributors_enabled": true,
+      "url": "",
+      "default_profile": false,
+      "profile_image_url_https": "https://si0.twimg.com/profile_images/2284174872/7df3h38zabcvjylnyfe3_normal.png",
+      "utc_offset": -28800,
+      "profile_banner_url": "https://si0.twimg.com/profile_banners/6253282/1347394302",
+      "id": 6253282,
+      "profile_use_background_image": true,
+      "listed_count": 11201,
+      "profile_text_color": "333333",
+      "protected": false,
+      "lang": "en",
+      "followers_count": 1444739,
+      "description": "The Real Twitter API. I tweet about API changes, service issues and happily answer questions about Twitter and our API. Don't get an answer? It's on my website.",
+      "notifications": false,
+      "geo_enabled": true,
+      "verified": true,
+      "time_zone": "Pacific Time (US & Canada)",
+      "profile_background_color": "C0DEED",
+      "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/656927849/miyt9dpjz77sc0w3d4vj.png",
+      "statuses_count": 3367,
+      "friends_count": 33,
+      "default_profile_image": false,
+      "profile_background_image_url": "http://a0.twimg.com/profile_background_images/656927849/miyt9dpjz77sc0w3d4vj.png",
+      "following": true,
+      "screen_name": "twitterapi"
+    },
+    "following": false
+  },
+  {
+    "slug": "team",
+    "name": "team",
+    "created_at": "Wed Nov 04 01:24:28 +0000 2009",
+    "uri": "/twitterapi/team",
+    "subscriber_count": 277,
+    "id_str": "2031945",
+    "member_count": 20,
+    "mode": "public",
+    "id": 2031945,
+    "full_name": "@twitterapi/team",
+    "description": "",
+    "user": {
+      "profile_background_tile": true,
+      "profile_sidebar_border_color": "C0DEED",
+      "name": "Twitter API",
+      "profile_sidebar_fill_color": "DDEEF6",
+      "location": "San Francisco, CA",
+      "created_at": "Wed May 23 06:01:13 +0000 2007",
+      "profile_image_url": "http://a0.twimg.com/profile_images/2284174872/7df3h38zabcvjylnyfe3_normal.png",
+      "is_translator": false,
+      "id_str": "6253282",
+      "profile_link_color": "0084B4",
+      "follow_request_sent": false,
+      "favourites_count": 25,
+      "contributors_enabled": true,
+      "url": "",
+      "default_profile": false,
+      "profile_image_url_https": "https://si0.twimg.com/profile_images/2284174872/7df3h38zabcvjylnyfe3_normal.png",
+      "utc_offset": -28800,
+      "profile_banner_url": "https://si0.twimg.com/profile_banners/6253282/1347394302",
+      "id": 6253282,
+      "profile_use_background_image": true,
+      "listed_count": 11201,
+      "profile_text_color": "333333",
+      "protected": false,
+      "lang": "en",
+      "followers_count": 1444739,
+      "description": "The Real Twitter API. I tweet about API changes, service issues and happily answer questions about Twitter and our API. Don't get an answer? It's on my website.",
+      "notifications": false,
+      "geo_enabled": true,
+      "verified": true,
+      "time_zone": "Pacific Time (US & Canada)",
+      "profile_background_color": "C0DEED",
+      "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/656927849/miyt9dpjz77sc0w3d4vj.png",
+      "statuses_count": 3367,
+      "friends_count": 33,
+      "default_profile_image": false,
+      "profile_background_image_url": "http://a0.twimg.com/profile_background_images/656927849/miyt9dpjz77sc0w3d4vj.png",
+      "following": true,
+      "screen_name": "twitterapi"
+    },
+    "following": true
+  }
+]
+```
+## lists/members
+
+返回指定的list所有成员。__私有list必须为其拥有者才有权利查看该list。__
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-members
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/lists/members.json|
+|:------|:-----|
+|Method|GET|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/15-min (user auth)|900|
+|请求次数/15-min (app ahth)|75|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|list_id|必要|list的数字ID。(`list_id`&#124;`slug`二选一即可)||
+|slug|必要|list的slug。如果使用此参数，必须再使用`owner_id`或`owner_screen_name`去指明其拥有者||
+|owner_screen_name|可选|list拥有者的账号名称||
+|owner_id|可选|list拥有者的账号ID||
+|count|可选|指定每页返回的结果数。默认20，最大值为5000|20|
+|cursor|半可选|对list中的成员按指定的页面大小(由参数`count`设定)进行分页。如果`cursor`没设定，则默认为`-1`，显示首页。<br/>API的响应内容中将会包含`previous_cursor`和`next_cursor`来帮助我们来回翻页。|-1|
+|include_entities|可选|是否包含`entities`信息。<br/>可以通过设置`include_entities=false` 来取消包含`entities`信息。|true|
+|skip_status|可选|用户对象中不包含status信息。<br/>当被设置为`true`、`t`或`1`时，用户对象中将不包含status信息|false|
+
+### 响应内容
+
+包含用于翻页的上下页游标以及该页内的成员详细信息（JSON格式）。
+```
+{
+  "previous_cursor": 0,
+  "previous_cursor_str": "0",
+  "next_cursor": 0,
+  "users": [
+    {
+      "profile_sidebar_fill_color": "bedcfa",
+      "expanded_url": null,
+      "profile_sidebar_border_color": "85add6",
+      "name": "Sharon Ly",
+      "profile_background_tile": false,
+      "location": "",
+      "profile_image_url": "http://a2.twimg.com/profile_images/1359867172/image_normal.jpg",
+      "created_at": "Sun May 25 00:29:44 +0000 2008",
+      "follow_request_sent": null,
+      "is_translator": false,
+      "profile_link_color": "955ea6",
+      "id_str": "14895163",
+      "entities": {
+        "urls": [
+
+        ],
+        "hashtags": [
+
+        ],
+        "user_mentions": [
+
+        ]
+      },
+      "default_profile": false,
+      "favourites_count": 63,
+      "contributors_enabled": false,
+      "url": null,
+      "id": 14895163,
+      "utc_offset": -28800,
+      "profile_image_url_https": "https://si0.twimg.com/profile_images/1359867172/image_normal.jpg",
+      "profile_use_background_image": true,
+      "listed_count": 43,
+      "lang": "en",
+      "profile_text_color": "4c58a3",
+      "followers_count": 784,
+      "protected": false,
+      "profile_background_color": "312040",
+      "geo_enabled": true,
+      "description": "",
+      "time_zone": "Pacific Time (US & Canada)",
+      "verified": false,
+      "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/257176598/hydrangeas_94_68830.jpg",
+      "notifications": null,
+      "friends_count": 188,
+      "statuses_count": 325,
+      "profile_background_image_url": "http://a1.twimg.com/profile_background_images/257176598/hydrangeas_94_68830.jpg",
+      "default_profile_image": false,
+      "status": {
+        "coordinates": null,
+        "truncated": false,
+        "created_at": "Tue Jul 05 03:46:03 +0000 2011",
+        "favorited": false,
+        "id_str": "88091240503058432",
+        "in_reply_to_user_id_str": "748353",
+        "contributors": null,
+        "text": "@kmonkeyjam Oh no... I don't know where that bone is but that sounds terribly painful. How are you still tweeting? Get better!",
+        "id": 88091240503058432,
+        "retweet_count": 0,
+        "in_reply_to_status_id_str": "87979906226597888",
+        "geo": null,
+        "retweeted": false,
+        "in_reply_to_user_id": 748353,
+        "source": "Twitter for iPhone",
+        "in_reply_to_screen_name": "kmonkeyjam",
+        "place": null,
+        "in_reply_to_status_id": 87979906226597888
+      },
+      "display_url": null,
+      "screen_name": "onesnowclimber",
+      "show_all_inline_media": true,
+      "following": null
+    }
+  ],
+  "next_cursor_str": "0"
+}
+```
 
 ## lists/show
 
@@ -35,14 +310,15 @@ https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api
 |响应格式|JSON|
 |是否需要认证|是|
 |是否有访问限制|是|
-|请求次数/15-min|75|
+|请求次数/15-min (user auth)|75|
+|请求次数/15-min (app ahth)|75|
 
 ### 参数信息
 
 |参数名称|必要性|描述|默认值|
 |:------|:------|:------|:------|
-|list_id|必要|list的数字ID||
-|slug|必要|list的slug(`list_id`&#124;`slug`二选一即可)||
+|list_id|必要|list的数字ID。(`list_id`&#124;`slug`二选一即可)||
+|slug|必要|list的slug。如果使用此参数，必须再使用`owner_id`或`owner_screen_name`去指明其拥有者||
 |owner_screen_name|可选|list拥有者的账号名称||
 |owner_id|可选|list拥有者的账号ID||
 
@@ -136,8 +412,8 @@ https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api
 
 |参数名称|必要性|描述|默认值|
 |:------|:------|:------|:------|
-|list_id|必要|list的数字ID||
-|slug|必要|list的slug(`list_id`&#124;`slug`二选一即可)||
+|list_id|必要|list的数字ID。(`list_id`&#124;`slug`二选一即可)||
+|slug|必要|list的slug。如果使用此参数，必须再使用`owner_id`或`owner_screen_name`去指明其拥有者||
 |owner_screen_name|可选|list拥有者的账号名称||
 |owner_id|可选|list拥有者的账号ID||
 |since_id|可选|返回推文ID最小值。<br/>返回ID大于指定的ID。<br/>API可返回的推文数量有限，如果数量超过上限，`since_id`将被强制设置成可获得的小ID<br>通俗来说就是会返回最新的那几条推文||
@@ -398,8 +674,8 @@ https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api
 |:------|:------|:------|:------|
 |owner_screen_name|可选|list拥有者的账号名称||
 |owner_id|可选|list拥有者的账号ID||
-|list_id|必要|list数字ID||
-|slug|必要|list的slug(`list_id`&#124;`slug`二选一即可)||
+|list_id|必要|list数字ID。(`list_id`&#124;`slug`二选一即可)||
+|slug|必要|list的slug。如果使用此参数，必须再使用`owner_id`或`owner_screen_name`去指明其拥有者||
 
 ### 响应内容
 
@@ -496,8 +772,8 @@ https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api
 
 |参数名称|必要性|描述|默认值|
 |:------|:------|:------|:------|
-|list_id|必要|list的数字ID||
-|slug|必要|list的slug(`list_id`&#124;`slug`二选一即可)||
+|list_id|必要|list的数字ID。(`list_id`&#124;`slug`二选一即可)||
+|slug|必要|list的slug。如果使用此参数，必须再使用`owner_id`或`owner_screen_name`去指明其拥有者||
 |name|可选|list的新名称||
 |mode|可选|list新访问权限(public&#124;private)||
 |description|可选|list的新描述||
