@@ -482,7 +482,7 @@ https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api
 |user_id|可选|用户id。当用户id与昵称相同时，有助于消除歧义||
 |screen_name|可选|用户昵称。当用户id与昵称相同时，有助于消除歧义||
 |count|可选|指定每页返回的结果数。默认20，最大值为1000|20|
-|cursor|可选|将结果分页。<br/>`-1`为首页，响应内容中提供`next_cursor `和`previous_cursor `支持来回翻页。接口支持的情况下推荐使用`cursor`，查看[Cursoring](https://developer.twitter.com/en/docs/basics/cursoring)获取更多详细内容||
+|cursor|可选|将结果分页。<br/>`-1`为首页，响应内容中提供`next_cursor`和`previous_cursor`支持来回翻页。接口支持的情况下推荐使用`cursor`，查看[Cursoring](https://developer.twitter.com/en/docs/basics/cursoring)获取更多详细内容||
 |filter_to_owned_lists|可选|仅返回自己的list。当值为`true`、`t`、`1`时，将仅返回接口身份认证用户自己的list中包含指定用户的list||
 
 ### 响应内容
