@@ -1,4 +1,5 @@
 # Create and manage lists
+
 <!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
@@ -10,29 +11,37 @@
 * [lists/members](#listsmembers)
 	* [接口资源信息](#接口资源信息-1)
 	* [参数信息](#参数信息-1)
-* [lists/show](#listsshow)
+	* [响应内容](#响应内容-1)
+* [lists/members/show](#listsmembersshow)
 	* [接口资源信息](#接口资源信息-2)
 	* [参数信息](#参数信息-2)
-	* [响应内容](#响应内容-1)
-* [lists/statuses](#listsstatuses)
+	* [响应内容](#响应内容-2)
+* [lists/memberships](#listsmemberships)
 	* [接口资源信息](#接口资源信息-3)
 	* [参数信息](#参数信息-3)
-	* [响应内容](#响应内容-2)
-* [lists/create](#listscreate)
+	* [响应内容](#响应内容-3)
+* [lists/show](#listsshow)
 	* [接口资源信息](#接口资源信息-4)
 	* [参数信息](#参数信息-4)
-	* [响应内容](#响应内容-3)
-* [lists/destroy](#listsdestroy)
+	* [响应内容](#响应内容-4)
+* [lists/statuses](#listsstatuses)
 	* [接口资源信息](#接口资源信息-5)
 	* [参数信息](#参数信息-5)
-	* [响应内容](#响应内容-4)
-* [lists/update](#listsupdate)
+	* [响应内容](#响应内容-5)
+* [lists/create](#listscreate)
 	* [接口资源信息](#接口资源信息-6)
 	* [参数信息](#参数信息-6)
-	* [响应内容](#响应内容-5)
+	* [响应内容](#响应内容-6)
+* [lists/destroy](#listsdestroy)
+	* [接口资源信息](#接口资源信息-7)
+	* [参数信息](#参数信息-7)
+	* [响应内容](#响应内容-7)
+* [lists/update](#listsupdate)
+	* [接口资源信息](#接口资源信息-8)
+	* [参数信息](#参数信息-8)
+	* [响应内容](#响应内容-8)
 
 <!-- /code_chunk_output -->
-
 
 ## lists/list
 
@@ -177,6 +186,7 @@ https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api
   }
 ]
 ```
+
 ## lists/members
 
 返回指定的list所有成员。__私有list必须为其拥有者才有权利查看该list。__
@@ -292,6 +302,306 @@ https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api
     }
   ],
   "next_cursor_str": "0"
+}
+```
+
+## lists/members/show
+
+检查指定用户是否为特定list的成员。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-members-show
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/lists/members/show.json|
+|:------|:-----|
+|Method|GET|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/15-min (user auth)|15|
+|请求次数/15-min (app ahth)|15|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|list_id|必要|list的数字ID。(`list_id`&#124;`slug`二选一即可)||
+|slug|必要|list的slug。如果使用此参数，必须再使用`owner_id`或`owner_screen_name`去指明其拥有者||
+|user_id|必要|指定用户id。当用户id与昵称相同时，有助于消除歧义||
+|screen_name|必要|指定用户昵称。当用户id与昵称相同时，有助于消除歧义||
+|owner_screen_name|可选|list拥有者的账号名称||
+|owner_id|可选|list拥有者的账号ID||
+|include_entities|可选|是否包含`entities`信息。<br/>API1.1中默认为开启状态。<br/>每条推文都会包含一个名为`entities`的JSON对象，<br/>此对象提供了关于这条推文的各种元数据，包括：`user_mentions`,`urls`和`hashtags`。<br/>`entities`目前在时间轴上选择加入，但它们将在未来成为输出的默认组成部分。查看[Tweet Entities](https://developer.twitter.com/overview/api/tweets)获取更多详细信息||
+|skip_status|可选|用户对象中不包含status信息。<br/>当被设置为`true`、`t`或`1`时，用户对象中将不包含status信息|false|
+
+### 响应内容
+
+如果list中不包含该用户，则响应`404`状态码。
+如果list中包含该用户，则返回该用户的详细信息(JSON格式)。
+```
+{
+  "id": "657693",
+  "id_str": "657693",
+  "is_translator": false,
+  "default_profile": false,
+  "entities": {
+    "url": {
+      "urls": [
+        {
+          "url": "http://t.co/jtb0IaGT",
+          "indices": [
+            0,
+            20
+          ],
+          "display_url": "afroginthevalley.com",
+          "expanded_url": "http://afroginthevalley.com/"
+        }
+      ]
+    },
+    "description": {
+      "urls": []
+    }
+  },
+  "show_all_inline_media": false,
+  "profile_use_background_image": false,
+  "profile_text_color": "999999",
+  "utc_offset": -18000,
+  "listed_count": 302,
+  "name": "Sylvain Carle",
+  "notifications": false,
+  "profile_sidebar_border_color": "87CB00",
+  "geo_enabled": true,
+  "follow_request_sent": false,
+  "url": "http://t.co/jtb0IaGT",
+  "lang": "en",
+  "profile_image_url_https": "https://si0.twimg.com/profile_images/1532782858/sylvaincarle-2011-profile-480_normal.png",
+  "created_at": "Thu Jan 18 00:10:45 +0000 2007",
+  "protected": false,
+  "followers_count": 4281,
+  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/228591248/bg-14.png",
+  "screen_name": "froginthevalley",
+  "profile_background_tile": true,
+  "friends_count": 2367,
+  "profile_sidebar_fill_color": "333333",
+  "description": "Developer Advocate at Twitter. Internet, opensource, media & geo/local geek. See also @sylvaincarle for LANG=FR.",
+  "time_zone": "Eastern Time (US & Canada)",
+  "default_profile_image": false,
+  "location": "San Francisco",
+  "profile_image_url": "http://a0.twimg.com/profile_images/1532782858/sylvaincarle-2011-profile-480_normal.png",
+  "favourites_count": 1790,
+  "following": false,
+  "profile_background_color": "000000",
+  "verified": false,
+  "statuses_count": 8191,
+  "status": {
+    "entities": {
+      "urls": [
+        {
+          "url": "http://t.co/GtBxX0IW",
+          "indices": [
+            54,
+            74
+          ],
+          "display_url": "example.com",
+          "expanded_url": "http://www.example.com"
+        },
+        {
+          "url": "http://t.co/2E5hDjME",
+          "indices": [
+            94,
+            114
+          ],
+          "display_url": "example.com",
+          "expanded_url": "http://example.com"
+        }
+      ],
+      "hashtags": [],
+      "user_mentions": [
+        {
+          "name": "VO5",
+          "indices": [
+            0,
+            6
+          ],
+          "screen_name": "MyVO5",
+          "id": "485879570",
+          "id_str": "485879570"
+        }
+      ]
+    },
+    "geo": null,
+    "place": null,
+    "in_reply_to_screen_name": "MyVO5",
+    "in_reply_to_user_id": 485879570,
+    "retweeted": false,
+    "in_reply_to_status_id": 243404113679888400,
+    "created_at": "Wed Sep 05 17:45:14 +0000 2012",
+    "possibly_sensitive": false,
+    "in_reply_to_status_id_str": "243404113679888385",
+    "contributors": null,
+    "favorited": false,
+    "source": "YoruFukurou",
+    "in_reply_to_user_id_str": "485879570",
+    "retweet_count": 0,
+    "id": "< Unable to parse in Javascript >",
+    "id_str": "243404435752099841",
+    "coordinates": null,
+    "truncated": false,
+    "text": "@MyVO5 make sure you configure your domain correctly, http://t.co/GtBxX0IW is not the same as http://t.co/2E5hDjME (also, refresh cache)."
+  },
+  "contributors_enabled": false,
+  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/228591248/bg-14.png",
+  "profile_link_color": "009DFF"
+}
+```
+
+## lists/memberships
+
+返回包含指定用户的list详细信息。如果未指定`user_id`和`screen_name`，则返回包含身份验证用户的list详细信息。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-memberships
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/lists/memberships.json|
+|:------|:-----|
+|Method|GET|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/15-min (user auth)|75|
+|请求次数/15-min (app ahth)|75|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|user_id|可选|用户id。当用户id与昵称相同时，有助于消除歧义||
+|screen_name|可选|用户昵称。当用户id与昵称相同时，有助于消除歧义||
+|count|可选|指定每页返回的结果数。默认20，最大值为1000|20|
+|cursor|可选|将结果分页。<br/>`-1`为首页，响应内容中提供`next_cursor `和`previous_cursor `支持来回翻页。接口支持的情况下推荐使用`cursor`，查看[Cursoring](https://developer.twitter.com/en/docs/basics/cursoring)获取更多详细内容||
+|filter_to_owned_lists|可选|仅返回自己的list。当值为`true`、`t`、`1`时，将仅返回接口身份认证用户自己的list中包含指定用户的list||
+
+### 响应内容
+
+包含用于翻页的上下页游标以及该页内所有list的详细信息（JSON格式）。
+```
+{
+  "previous_cursor": 0,
+  "lists": [
+    {
+      "name": "Digital Marketing",
+      "slug": "digital-marketing",
+      "uri": "/pointcg/digital-marketing",
+      "id_str": "49260625",
+      "subscriber_count": 1,
+      "member_count": 46,
+      "mode": "public",
+      "id": 49260625,
+      "full_name": "@pointcg/digital-marketing",
+      "description": "",
+      "user": {
+        "profile_sidebar_border_color": "447DBC",
+        "profile_background_tile": false,
+        "profile_sidebar_fill_color": "447DBC",
+        "name": "Chris Greco",
+        "created_at": "Wed Feb 28 01:05:01 +0000 2007",
+        "location": "",
+        "profile_image_url": "http://a1.twimg.com/profile_images/1331628329/chris_2_normal.jpg",
+        "follow_request_sent": false,
+        "profile_link_color": "0000FF",
+        "is_translator": false,
+        "id_str": "799757",
+        "default_profile": false,
+        "favourites_count": 2,
+        "contributors_enabled": false,
+        "url": null,
+        "id": 799757,
+        "profile_image_url_https": "https://si0.twimg.com/profile_images/1331628329/chris_2_normal.jpg",
+        "utc_offset": -18000,
+        "profile_use_background_image": true,
+        "listed_count": 4,
+        "lang": "en",
+        "followers_count": 66,
+        "profile_text_color": "000000",
+        "protected": false,
+        "profile_background_color": "0F5B5F",
+        "verified": false,
+        "time_zone": "Eastern Time (US & Canada)",
+        "profile_background_image_url_https": "https://si0.twimg.com/images/themes/theme1/bg.png",
+        "description": "",
+        "notifications": false,
+        "geo_enabled": false,
+        "statuses_count": 122,
+        "default_profile_image": false,
+        "friends_count": 80,
+        "profile_background_image_url": "http://a0.twimg.com/images/themes/theme1/bg.png",
+        "following": false,
+        "screen_name": "pointcg",
+        "show_all_inline_media": false
+      },
+      "following": false
+    },
+    {
+      "name": "vanessa williams",
+      "slug": "vanessa-williams",
+      "uri": "/Barbis_doll/vanessa-williams",
+      "id_str": "49270287",
+      "subscriber_count": 0,
+      "member_count": 1,
+      "mode": "public",
+      "id": 49270287,
+      "full_name": "@Barbis_doll/vanessa-williams",
+      "description": "former ms. america, talented dancer, singer and actress",
+      "user": {
+        "profile_sidebar_border_color": "C0DEED",
+        "name": "Debbie M.",
+        "profile_background_tile": false,
+        "profile_sidebar_fill_color": "DDEEF6",
+        "location": null,
+        "profile_image_url": "http://a3.twimg.com/sticky/default_profile_images/default_profile_4_normal.png",
+        "created_at": "Tue Jun 28 00:50:43 +0000 2011",
+        "is_translator": false,
+        "profile_link_color": "0084B4",
+        "id_str": "325263705",
+        "follow_request_sent": null,
+        "url": null,
+        "favourites_count": 0,
+        "contributors_enabled": false,
+        "default_profile": true,
+        "utc_offset": null,
+        "id": 325263705,
+        "profile_image_url_https": "https://si0.twimg.com/sticky/default_profile_images/default_profile_4_normal.png",
+        "listed_count": 0,
+        "profile_use_background_image": true,
+        "protected": false,
+        "followers_count": 2,
+        "lang": "en",
+        "profile_text_color": "333333",
+        "time_zone": null,
+        "profile_background_image_url_https": "https://si0.twimg.com/images/themes/theme1/bg.png",
+        "notifications": null,
+        "geo_enabled": false,
+        "description": null,
+        "profile_background_color": "C0DEED",
+        "verified": false,
+        "default_profile_image": true,
+        "friends_count": 11,
+        "statuses_count": 6,
+        "profile_background_image_url": "http://a0.twimg.com/images/themes/theme1/bg.png",
+        "following": null,
+        "screen_name": "Barbis_doll",
+        "show_all_inline_media": false
+      },
+      "following": false
+    },
+  ],
+  "previous_cursor_str": "0",
+  "next_cursor": 1373407125131783107,
+  "next_cursor_str": "1373407125131783107"
 }
 ```
 

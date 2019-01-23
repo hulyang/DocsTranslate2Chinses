@@ -12,8 +12,8 @@
 ### [Create and manage lists](cmlist.md#create-and-manage-lists)
 #### [GET lists/list](cmlist.md#listslist)
 #### [GET lists/members](cmlist.md#listsmembers)
-#### GET lists/members/show
-#### GET lists/memberships
+#### [GET lists/members/show](cmlist.md#listsmembersshow)
+#### [GET lists/memberships](cmlist.md#listsmemberships)
 #### GET lists/ownerships
 #### [GET lists/show](cmlist.md#listsshow)
 #### [GET lists/statuses](cmlist.md#listsstatuses)
