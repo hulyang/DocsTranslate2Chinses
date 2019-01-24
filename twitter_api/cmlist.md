@@ -333,13 +333,13 @@ https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api
 |screen_name|必要|指定用户昵称。当用户id与昵称相同时，有助于消除歧义||
 |owner_screen_name|可选|list拥有者的账号名称||
 |owner_id|可选|list拥有者的账号ID||
-|include_entities|可选|是否包含`entities`信息。<br/>API1.1中默认为开启状态。<br/>每条推文都会包含一个名为`entities`的JSON对象，<br/>此对象提供了关于这条推文的各种元数据，包括：`user_mentions`,`urls`和`hashtags`。<br/>`entities`目前在时间轴上选择加入，但它们将在未来成为输出的默认组成部分。查看[Tweet Entities](https://developer.twitter.com/overview/api/tweets)获取更多详细信息||
+|include_entities|可选|是否包含`entities`信息。<br/>每条推文都会包含一个名为`entities`的JSON对象，<br/>此对象提供了关于这条推文的各种元数据，包括：`user_mentions`,`urls`和`hashtags`。<br/>`entities`目前在时间轴上选择加入，但它们将在未来成为输出的默认组成部分。查看[Tweet Entities](https://developer.twitter.com/overview/api/tweets)获取更多详细信息||
 |skip_status|可选|用户对象中不包含status信息。<br/>当被设置为`true`、`t`或`1`时，用户对象中将不包含status信息|false|
 
 ### 响应内容
 
-如果list中不包含该用户，则响应`404`状态码。
-如果list中包含该用户，则返回该用户的详细信息(JSON格式)。
+如果list的成员中不包含该用户，则响应`404`状态码。
+如果list的成员中包含该用户，则返回该用户的详细信息(JSON格式)。
 ```
 {
   "id": "657693",
@@ -605,6 +605,193 @@ https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api
 }
 ```
 
+## lists/ownerships
+
+返回指定Twitter用户所拥有的全部list。__私有list仅拥有者自己可以查看。__
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-ownerships
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/lists/ownerships.json|
+|:------|:-----|
+|Method|GET|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/15-min (user auth)|15|
+|请求次数/15-min (app ahth)|15|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|user_id|可选|用户id。当用户id与昵称相同时，有助于消除歧义||
+|screen_name|可选|用户昵称。当用户id与昵称相同时，有助于消除歧义||
+|count|可选|指定每页返回的结果数。默认20，最大值为1000|20|
+|cursor|可选|将结果分页。<br/>`-1`为首页，响应内容中提供`next_cursor`和`previous_cursor`支持来回翻页。接口支持的情况下推荐使用`cursor`，查看[Cursoring](https://developer.twitter.com/en/docs/basics/cursoring)获取更多详细内容||
+
+### 响应内容
+
+包含用于翻页的上下页游标以及该页内所有list的详细信息（JSON格式）。
+```
+{
+  "next_cursor":46541288,
+  "next_cursor_str":"46541288",
+  "previous_cursor":0,
+  "previous_cursor_str":"0",
+  "lists":[
+    {
+      "id":84839422,
+      "id_str":"84839422",
+      "name":"Official Twitter accts",
+      "uri":"/twitter/official-twitter-accts",
+      "subscriber_count":20,
+      "member_count":0,
+      "mode":"public",
+      "description":"Accounts managed by Twitter, Inc. ",
+      "slug":"official-twitter-accts",
+      "full_name":"@twitter/official-twitter-accts",
+      "created_at":"Tue Feb 05 18:14:21 +0000 2013",
+      "following":false,
+      "user":{
+        "id":783214,
+        "id_str":"783214",
+        "name":"Twitter",
+        "screen_name":"twitter",
+        "location":"San Francisco, CA",
+        "description":"Your official source for news, updates and tips from Twitter, Inc.",
+        "url":"http://blog.twitter.com/",
+        "entities":{
+          "url":{
+            "urls":[
+              {
+                "url":"http://blog.twitter.com/",
+                "expanded_url":null,
+                "indices":[
+                  0,
+                  24
+                ]
+              }
+            ]
+          },
+          "description":{
+            "urls":[
+
+            ]
+          }
+        },
+        "protected":false,
+        "followers_count":17214319,
+        "friends_count":120,
+        "listed_count":76232,
+        "created_at":"Tue Feb 20 14:35:54 +0000 2007",
+        "favourites_count":22,
+        "utc_offset":-28800,
+        "time_zone":"Pacific Time (US & Canada)",
+        "geo_enabled":true,
+        "verified":true,
+        "statuses_count":1563,
+        "lang":"en",
+        "contributors_enabled":false,
+        "is_translator":false,
+        "profile_background_color":"ACDED6",
+        "profile_background_image_url":"...",
+        "profile_background_image_url_https":"...",
+        "profile_background_tile":true,
+        "profile_image_url":"...",
+        "profile_image_url_https":"...",
+        "profile_banner_url":"https://si0.twimg.com/profile_banners/783214/1347405327",
+        "profile_link_color":"038543",
+        "profile_sidebar_border_color":"EEEEEE",
+        "profile_sidebar_fill_color":"F6F6F6",
+        "profile_text_color":"333333",
+        "profile_use_background_image":true,
+        "default_profile":false,
+        "default_profile_image":false,
+        "following":true,
+        "follow_request_sent":false,
+        "notifications":false
+      }
+    },
+    {
+      "id":46541288,
+      "id_str":"46541288",
+      "name":"D9",
+      "uri":"/twitter/d9",
+      "subscriber_count":340,
+      "member_count":327,
+      "mode":"public",
+      "description":"D9 attendees with a Twitter account",
+      "slug":"d9",
+      "full_name":"@twitter/d9",
+      "created_at":"Tue May 31 16:29:35 +0000 2011",
+      "following":false,
+      "user":{
+        "id":783214,
+        "id_str":"783214",
+        "name":"Twitter",
+        "screen_name":"twitter",
+        "location":"San Francisco, CA",
+        "description":"Your official source for news, updates and tips from Twitter, Inc.",
+        "url":"http://blog.twitter.com/",
+        "entities":{
+          "url":{
+            "urls":[
+              {
+                "url":"http://blog.twitter.com/",
+                "expanded_url":null,
+                "indices":[
+                  0,
+                  24
+                ]
+              }
+            ]
+          },
+          "description":{
+            "urls":[
+
+            ]
+          }
+        },
+        "protected":false,
+        "followers_count":17214319,
+        "friends_count":120,
+        "listed_count":76232,
+        "created_at":"Tue Feb 20 14:35:54 +0000 2007",
+        "favourites_count":22,
+        "utc_offset":-28800,
+        "time_zone":"Pacific Time (US & Canada)",
+        "geo_enabled":true,
+        "verified":true,
+        "statuses_count":1563,
+        "lang":"en",
+        "contributors_enabled":false,
+        "is_translator":false,
+        "profile_background_color":"ACDED6",
+        "profile_background_image_url":"...",
+        "profile_background_image_url_https":"...",
+        "profile_background_tile":true,
+        "profile_image_url":"...",
+        "profile_image_url_https":"...",
+        "profile_banner_url":"https://si0.twimg.com/profile_banners/783214/1347405327",
+        "profile_link_color":"038543",
+        "profile_sidebar_border_color":"EEEEEE",
+        "profile_sidebar_fill_color":"F6F6F6",
+        "profile_text_color":"333333",
+        "profile_use_background_image":true,
+        "default_profile":false,
+        "default_profile_image":false,
+        "following":true,
+        "follow_request_sent":false,
+        "notifications":false
+      }
+    }
+  ]
+}
+```
+
 ## lists/show
 
 返回指定的list信息。__私有list必须为其拥有者才有权利查看该list。__
@@ -860,6 +1047,601 @@ https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api
     "in_reply_to_status_id": null
   }
 ]
+```
+
+## lists/subscribers
+
+返回指定list的所有订阅用户详细信息。__私有list只有其拥有者才能查看其订阅用户。__
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-subscribers
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/lists/subscribers.json|
+|:------|:-----|
+|Method|GET|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/15-min (user auth)|180|
+|请求次数/15-min (app ahth)|15|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|list_id|必要|list的数字ID。(`list_id`&#124;`slug`二选一即可)||
+|slug|必要|list的slug。如果使用此参数，必须再使用`owner_id`或`owner_screen_name`去指明其拥有者||
+|owner_screen_name|可选|list拥有者的账号名称||
+|owner_id|可选|list拥有者的账号ID||
+|count|可选|指定每页返回的结果数。默认20，最大值为5000|20|
+|cursor|可选|将结果分页。<br/>`-1`为首页，响应内容中提供`next_cursor`和`previous_cursor`支持来回翻页。接口支持的情况下推荐使用`cursor`，查看[Using cursors to navigate collections](https://developer.twitter.com/en/docs/basics/cursoring)获取更多详细内容|-1|
+|include_entities|可选|是否包含`entities`信息。<br/>每条推文都会包含一个名为`entities`的JSON对象，<br/>此对象提供了关于这条推文的各种元数据，包括：`user_mentions`,`urls`和`hashtags`。<br/>`entities`目前在时间轴上选择加入，但它们将在未来成为输出的默认组成部分。查看[Tweet Entities](https://developer.twitter.com/overview/api/tweets)获取更多详细信息|true|
+|skip_status|可选|用户对象中不包含status信息。<br/>当被设置为`true`、`t`或`1`时，用户对象中将不包含status信息|false|
+
+### 响应内容
+
+包含用于翻页的上下页游标以及该页内所有订阅用户详细信息(JSON格式)。
+```
+{
+  "previous_cursor": 0,
+  "previous_cursor_str": "0",
+  "next_cursor": 1357643166637635702,
+  "users": [
+    {
+      "profile_background_tile": false,
+      "profile_sidebar_fill_color": "DDEEF6",
+      "name": "Almissen665",
+      "profile_sidebar_border_color": "C0DEED",
+      "location": null,
+      "profile_image_url": "http://a0.twimg.com/sticky/default_profile_images/default_profile_1_normal.png",
+      "created_at": "Mon Jun 27 09:17:15 +0000 2011",
+      "follow_request_sent": false,
+      "is_translator": false,
+      "profile_link_color": "0084B4",
+      "id_str": "324841714",
+      "url": null,
+      "default_profile": true,
+      "contributors_enabled": false,
+      "favourites_count": 0,
+      "id": 324841714,
+      "utc_offset": null,
+      "profile_image_url_https": "https://si0.twimg.com/sticky/default_profile_images/default_profile_1_normal.png",
+      "profile_use_background_image": true,
+      "listed_count": 0,
+      "lang": "en",
+      "profile_text_color": "333333",
+      "followers_count": 6,
+      "protected": false,
+      "profile_background_image_url_https": "https://si0.twimg.com/images/themes/theme1/bg.png",
+      "notifications": false,
+      "geo_enabled": false,
+      "description": null,
+      "profile_background_color": "C0DEED",
+      "time_zone": null,
+      "verified": false,
+      "statuses_count": 1,
+      "friends_count": 27,
+      "profile_background_image_url": "http://a0.twimg.com/images/themes/theme1/bg.png",
+      "default_profile_image": true,
+      "screen_name": "bonasser789",
+      "following": false,
+      "show_all_inline_media": false
+    },
+    {
+      "profile_sidebar_fill_color": "E6F6F9",
+      "profile_sidebar_border_color": "DBE9ED",
+      "name": "GR Syber-Space",
+      "profile_background_tile": true,
+      "location": "Grand Rapids, MI",
+      "profile_image_url": "http://a2.twimg.com/profile_images/1322547748/images__97__normal.jpg",
+      "created_at": "Thu Sep 30 23:05:38 +0000 2010",
+      "profile_link_color": "CC3366",
+      "id_str": "197218370",
+      "follow_request_sent": false,
+      "is_translator": false,
+      "url": "http://www.wix.com/castlesportsgr/myj",
+      "default_profile": false,
+      "favourites_count": 2,
+      "contributors_enabled": false,
+      "id": 197218370,
+      "utc_offset": -18000,
+      "profile_image_url_https": "https://si0.twimg.com/profile_images/1322547748/images__97__normal.jpg",
+      "profile_use_background_image": true,
+      "listed_count": 268,
+      "lang": "en",
+      "profile_text_color": "333333",
+      "followers_count": 2628,
+      "protected": true,
+      "notifications": false,
+      "geo_enabled": true,
+      "profile_background_color": "DBE9ED",
+      "description": "Welcome to Teen Gossip 411. Celebrity Gossip, Teens fashion trends for the summer 2011, Hollywood Gossip, Hotest music, Teen Websites, and more.",
+      "time_zone": "Quito",
+      "verified": false,
+      "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/237705957/images__97_.jpg",
+      "default_profile_image": false,
+      "friends_count": 2846,
+      "profile_background_image_url": "http://a2.twimg.com/profile_background_images/237705957/images__97_.jpg",
+      "statuses_count": 7463,
+      "show_all_inline_media": true,
+      "screen_name": "GRSYBERSPACE",
+      "following": false
+    }
+  ],
+  "next_cursor_str": "1357643166637635702"
+}
+```
+
+## lists/subscribers/show
+
+检查指定用户是否为特定list的订阅者。若是，则返回该用户的详细信息。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-subscribers-show
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/lists/subscribers/show.json|
+|:------|:-----|
+|Method|GET|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/15-min (user auth)|15|
+|请求次数/15-min (app ahth)|15|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|list_id|必要|list的数字ID。(`list_id`&#124;`slug`二选一即可)||
+|slug|必要|list的slug。如果使用此参数，必须再使用`owner_id`或`owner_screen_name`去指明其拥有者||
+|user_id|必要|指定用户id。当用户id与昵称相同时，有助于消除歧义||
+|screen_name|必要|指定用户昵称。当用户id与昵称相同时，有助于消除歧义||
+|owner_screen_name|可选|list拥有者的账号名称||
+|owner_id|可选|list拥有者的账号ID||
+|include_entities|可选|是否包含`entities`信息。<br/>每条推文都会包含一个名为`entities`的JSON对象，<br/>此对象提供了关于这条推文的各种元数据，包括：`user_mentions`,`urls`和`hashtags`。<br/>`entities`目前在时间轴上选择加入，但它们将在未来成为输出的默认组成部分。查看[Tweet Entities](https://developer.twitter.com/overview/api/tweets)获取更多详细信息||
+|skip_status|可选|用户对象中不包含status信息。<br/>当被设置为`true`、`t`或`1`时，用户对象中将不包含status信息|false|
+
+### 响应内容
+
+如果list的订阅者中不包含该用户，则响应`404`状态码。
+如果list的订阅者中包含该用户，则返回该用户的详细信息(JSON格式)。
+```
+{
+  "id": "819797",
+  "id_str": "819797",
+  "is_translator": false,
+  "default_profile": false,
+  "entities": {
+    "url": {
+      "urls": [
+        {
+          "url": "http://t.co/Lxw7upbN",
+          "indices": [
+            0,
+            20
+          ],
+          "display_url": "rebelmouse.com/episod/",
+          "expanded_url": "http://www.rebelmouse.com/episod/"
+        }
+      ]
+    },
+    "description": {
+      "urls": []
+    }
+  },
+  "show_all_inline_media": true,
+  "profile_use_background_image": true,
+  "profile_text_color": "D20909",
+  "utc_offset": -28800,
+  "listed_count": 341,
+  "name": "Taylor Singletary",
+  "notifications": false,
+  "profile_sidebar_border_color": "000000",
+  "geo_enabled": true,
+  "follow_request_sent": false,
+  "url": "http://t.co/Lxw7upbN",
+  "lang": "en",
+  "profile_image_url_https": "https://si0.twimg.com/profile_images/2574556418/dk93ji5e3w4rwscaabt3_normal.png",
+  "created_at": "Wed Mar 07 22:23:19 +0000 2007",
+  "protected": false,
+  "followers_count": 7180,
+  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/643655842/hzfv12wini4q60zzrthg.png",
+  "screen_name": "episod",
+  "profile_background_tile": true,
+  "friends_count": 5452,
+  "profile_sidebar_fill_color": "FBFBFB",
+  "description": "Reality Technician, Twitter API team, synthesizer enthusiast; a most excellent adventure in timelines. Missive commander.",
+  "time_zone": "Pacific Time (US & Canada)",
+  "default_profile_image": false,
+  "location": "San Francisco, CA",
+  "profile_image_url": "http://a0.twimg.com/profile_images/2574556418/dk93ji5e3w4rwscaabt3_normal.png",
+  "profile_banner_url": "https://si0.twimg.com/profile_banners/819797/1346803502",
+  "favourites_count": 16076,
+  "following": true,
+  "profile_background_color": "000000",
+  "verified": false,
+  "statuses_count": 18132,
+  "status": {
+    "entities": {
+      "urls": [
+        {
+          "url": "http://t.co/4mdAn0tF",
+          "indices": [
+            16,
+            36
+          ],
+          "display_url": "youtube.com/watch?v=pPkNtg…",
+          "expanded_url": "http://www.youtube.com/watch?v=pPkNtg3Fvwk&feature=youtube_gdata_player"
+        }
+      ],
+      "hashtags": [],
+      "user_mentions": []
+    },
+    "geo": null,
+    "place": null,
+    "in_reply_to_screen_name": null,
+    "in_reply_to_user_id": null,
+    "retweeted": false,
+    "in_reply_to_status_id": null,
+    "created_at": "Wed Sep 05 15:57:09 +0000 2012",
+    "possibly_sensitive": false,
+    "in_reply_to_status_id_str": null,
+    "contributors": null,
+    "favorited": false,
+    "source": "YouTube on iOS",
+    "in_reply_to_user_id_str": null,
+    "retweet_count": 0,
+    "id": "< Unable to parse in Javascript >",
+    "id_str": "243377236902821888",
+    "coordinates": null,
+    "truncated": false,
+    "text": "Current status  http://t.co/4mdAn0tF"
+  },
+  "contributors_enabled": false,
+  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/643655842/hzfv12wini4q60zzrthg.png",
+  "profile_link_color": "C71818"
+}
+```
+
+## lists/subscriptions
+
+返回指定Twitter用户所订阅的全部list。默认情况下每页__20__条list，不包含其拥有的list。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-subscriptions
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/lists/subscriptions.json|
+|:------|:-----|
+|Method|GET|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/15-min (user auth)|15|
+|请求次数/15-min (app ahth)|15|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|user_id|可选|用户id。当用户id与昵称相同时，有助于消除歧义||
+|screen_name|可选|用户昵称。当用户id与昵称相同时，有助于消除歧义||
+|count|可选|指定每页返回的结果数。默认20，最大值为1000|20|
+|cursor|可选|将结果分页。<br/>`-1`为首页，响应内容中提供`next_cursor`和`previous_cursor`支持来回翻页。接口支持的情况下推荐使用`cursor`，查看[Cursoring](https://developer.twitter.com/en/docs/basics/cursoring)获取更多详细内容||
+
+### 响应内容
+
+包含用于翻页的上下页游标以及该页内所有list的详细信息（JSON格式）。
+```
+{
+  "previous_cursor": 0,
+  "lists": [
+    {
+      "slug": "team",
+      "name": "team",
+      "uri": "/TwitterEng/team",
+      "created_at": "Mon Oct 03 02:48:07 +0000 2011",
+      "subscriber_count": 131,
+      "id_str": "55932616",
+      "member_count": 324,
+      "mode": "public",
+      "id": 55932616,
+      "full_name": "@TwitterEng/team",
+      "description": "",
+      "user": {
+        "profile_sidebar_border_color": "C6E2EE",
+        "profile_sidebar_fill_color": "DAECF4",
+        "profile_background_tile": false,
+        "expanded_url": null,
+        "name": "Twitter Engineering",
+        "location": "San Francisco, CA",
+        "created_at": "Sat Jun 16 00:14:36 +0000 2007",
+        "profile_image_url": "http://a2.twimg.com/profile_images/1262149685/twitter_newbird_boxed_blueonwhite_normal.png",
+        "is_translator": false,
+        "profile_link_color": "1F98C7",
+        "follow_request_sent": null,
+        "id_str": "6844292",
+        "entities": {
+          "urls": [
+
+          ],
+          "hashtags": [
+
+          ],
+          "user_mentions": [
+
+          ]
+        },
+        "url": "http://engineering.twitter.com",
+        "default_profile": false,
+        "favourites_count": 0,
+        "contributors_enabled": true,
+        "id": 6844292,
+        "utc_offset": -14400,
+        "profile_image_url_https": "https://si0.twimg.com/profile_images/1262149685/twitter_newbird_boxed_blueonwhite_normal.png",
+        "profile_use_background_image": true,
+        "listed_count": 1493,
+        "profile_text_color": "663B12",
+        "lang": "en",
+        "followers_count": 132674,
+        "protected": false,
+        "profile_background_image_url_https": "https://si0.twimg.com/images/themes/theme2/bg.gif",
+        "verified": true,
+        "geo_enabled": true,
+        "notifications": null,
+        "time_zone": "Atlantic Time (Canada)",
+        "description": "The official account for Twitter Engineering.",
+        "profile_background_color": "C6E2EE",
+        "profile_background_image_url": "http://a1.twimg.com/images/themes/theme2/bg.gif",
+        "default_profile_image": false,
+        "statuses_count": 61,
+        "friends_count": 0,
+        "display_url": null,
+        "screen_name": "TwitterEng",
+        "following": null,
+        "show_all_inline_media": true
+      },
+      "following": false
+    },
+    {
+      "slug": "the-brain-trust",
+      "name": "The Brain Trust",
+      "uri": "/LTRK140/the-brain-trust",
+      "created_at": "Sun Mar 06 20:01:50 +0000 2011",
+      "subscriber_count": 24,
+      "id_str": "37396827",
+      "member_count": 148,
+      "mode": "public",
+      "id": 37396827,
+      "full_name": "@LTRK140/the-brain-trust",
+      "description": "Twitter Artists, Ascii, Unicode Art.",
+      "user": {
+        "profile_sidebar_border_color": "080000",
+        "profile_sidebar_fill_color": "",
+        "profile_background_tile": true,
+        "name": "﹅█▄▀█▀ █▀▐━▀▄ ▌◢▌██﹅",
+        "location": "Toronto",
+        "created_at": "Fri Jun 04 16:48:39 +0000 2010",
+        "profile_image_url": "http://a1.twimg.com/profile_images/1315622089/Cool_Daddy_normal.png",
+        "is_translator": false,
+        "profile_link_color": "080000",
+        "follow_request_sent": false,
+        "id_str": "151938348",
+        "url": "http://twitter.com/KREWZO",
+        "favourites_count": 10,
+        "contributors_enabled": false,
+        "default_profile": false,
+        "id": 151938348,
+        "utc_offset": -28800,
+        "profile_image_url_https": "https://si0.twimg.com/profile_images/1315622089/Cool_Daddy_normal.png",
+        "profile_use_background_image": true,
+        "listed_count": 131,
+        "profile_text_color": "000000",
+        "lang": "en",
+        "followers_count": 838,
+        "protected": false,
+        "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/285103295/ltrk140.JPG",
+        "verified": false,
+        "geo_enabled": true,
+        "notifications": false,
+        "time_zone": "Pacific Time (US & Canada)",
+        "description": "▓⁄─⁄⁄﹅█▄▀█▀ █▀▐━▀▄ ▌◢▌██﹅⁄─⁄⁄▓  rn  •140•ASCII•UNICODE•ART• BY OZ MELO   •  I LIVE & WORK IN #YYZ.     ★★ MOST TWEETS ARE BEST VIEWED AS A STATUS PAGE ★★   █♥█",
+        "profile_background_color": "030003",
+        "profile_background_image_url": "http://a1.twimg.com/profile_background_images/285103295/ltrk140.JPG",
+        "default_profile_image": false,
+        "statuses_count": 1006,
+        "friends_count": 139,
+        "screen_name": "LTRK140",
+        "following": false,
+        "show_all_inline_media": true
+      },
+      "following": false
+    },
+    {
+      "slug": "twoutside-lands",
+      "name": "Twoutside Lands",
+      "uri": "/dannyhertz/twoutside-lands",
+      "created_at": "Fri Aug 12 07:21:25 +0000 2011",
+      "subscriber_count": 12,
+      "id_str": "52270561",
+      "member_count": 25,
+      "mode": "public",
+      "id": 52270561,
+      "full_name": "@dannyhertz/twoutside-lands",
+      "description": "Tweeps @ Outside Lands 2011",
+      "user": {
+        "profile_sidebar_border_color": "4685e3",
+        "profile_sidebar_fill_color": "c7dced",
+        "profile_background_tile": false,
+        "expanded_url": "http://www.dannyhertz.com",
+        "name": "Danny Hertz",
+        "location": "San Francisco",
+        "created_at": "Sat Nov 15 02:26:09 +0000 2008",
+        "profile_image_url": "http://a0.twimg.com/profile_images/1546221308/6153868543_d7ab87737a_b_normal.jpeg",
+        "is_translator": true,
+        "profile_link_color": "005082",
+        "follow_request_sent": false,
+        "id_str": "17400516",
+        "entities": {
+          "urls": [
+
+          ],
+          "hashtags": [
+
+          ],
+          "user_mentions": [
+
+          ]
+        },
+        "url": "http://t.co/90RtgWI",
+        "favourites_count": 243,
+        "contributors_enabled": false,
+        "default_profile": false,
+        "id": 17400516,
+        "utc_offset": -28800,
+        "profile_image_url_https": "https://si0.twimg.com/profile_images/1546221308/6153868543_d7ab87737a_b_normal.jpeg",
+        "profile_use_background_image": true,
+        "listed_count": 52,
+        "profile_text_color": "000000",
+        "lang": "en",
+        "followers_count": 2684,
+        "protected": false,
+        "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/331345358/pamperedpuppy20091103.jpeg",
+        "verified": false,
+        "geo_enabled": true,
+        "notifications": false,
+        "time_zone": "Pacific Time (US & Canada)",
+        "description": "Software Engineer on the User Services team at Twitter and lead singer for the rock band Journey.",
+        "profile_background_color": "ffffff",
+        "profile_background_image_url": "http://a0.twimg.com/profile_background_images/331345358/pamperedpuppy20091103.jpeg",
+        "default_profile_image": false,
+        "statuses_count": 2318,
+        "friends_count": 261,
+        "display_url": "dannyhertz.com",
+        "screen_name": "dannyhertz",
+        "following": false,
+        "show_all_inline_media": true
+      },
+      "following": false
+    },
+    {
+      "slug": "july-6-curators",
+      "name": "July 6 curators",
+      "uri": "/townhall/july-6-curators",
+      "created_at": "Mon Jul 04 20:37:28 +0000 2011",
+      "subscriber_count": 58,
+      "id_str": "49286494",
+      "member_count": 8,
+      "mode": "public",
+      "id": 49286494,
+      "full_name": "@townhall/july-6-curators",
+      "description": "Curators helping for the Town Hall at the White House on July 6th at 2pm ET",
+      "user": {
+        "profile_sidebar_border_color": "C0DEED",
+        "profile_sidebar_fill_color": "DDEEF6",
+        "profile_background_tile": true,
+        "name": "Town Hall",
+        "location": "",
+        "created_at": "Tue May 31 01:50:52 +0000 2011",
+        "profile_image_url": "http://a2.twimg.com/profile_images/1419432899/avatar_normal.png",
+        "is_translator": false,
+        "profile_link_color": "0084B4",
+        "follow_request_sent": null,
+        "id_str": "308230587",
+        "url": "http://askobama.twitter.com",
+        "default_profile": false,
+        "favourites_count": 0,
+        "contributors_enabled": true,
+        "id": 308230587,
+        "utc_offset": -28800,
+        "profile_image_url_https": "https://si0.twimg.com/profile_images/1419432899/avatar_normal.png",
+        "profile_use_background_image": true,
+        "listed_count": 517,
+        "profile_text_color": "333333",
+        "lang": "en",
+        "followers_count": 24456,
+        "protected": false,
+        "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/280500767/bg.jpg",
+        "verified": true,
+        "geo_enabled": false,
+        "notifications": null,
+        "time_zone": "Pacific Time (US & Canada)",
+        "description": "Official account for Twitter hosted town halls. Our first on July 6th, 2PM ET. ",
+        "profile_background_color": "C0DEED",
+        "profile_background_image_url": "http://a0.twimg.com/profile_background_images/280500767/bg.jpg",
+        "default_profile_image": false,
+        "statuses_count": 100,
+        "friends_count": 2,
+        "screen_name": "townhall",
+        "following": null,
+        "show_all_inline_media": true
+      },
+      "following": false
+    },
+    {
+      "slug": "streaming-music-industry",
+      "name": "Streaming Music Industry ",
+      "uri": "/meetmarshall/streaming-music-industry",
+      "created_at": "Thu Mar 31 04:04:10 +0000 2011",
+      "subscriber_count": 193,
+      "id_str": "41857276",
+      "member_count": 1,
+      "mode": "public",
+      "id": 41857276,
+      "full_name": "@meetmarshall/streaming-music-industry",
+      "description": "A custom list created by adding, subtracting or filtering existing lists (made using @formulists)",
+      "user": {
+        "profile_sidebar_border_color": "C0DEED",
+        "profile_sidebar_fill_color": "DDEEF6",
+        "profile_background_tile": false,
+        "name": "Marshall Kirkpatrick",
+        "location": "",
+        "created_at": "Mon Mar 28 20:18:47 +0000 2011",
+        "profile_image_url": "http://a3.twimg.com/sticky/default_profile_images/default_profile_0_normal.png",
+        "is_translator": false,
+        "profile_link_color": "0084B4",
+        "follow_request_sent": false,
+        "id_str": "273602749",
+        "url": "http://twitter.com/marshallk",
+        "default_profile": true,
+        "favourites_count": 0,
+        "contributors_enabled": false,
+        "id": 273602749,
+        "utc_offset": -28800,
+        "profile_image_url_https": "https://si0.twimg.com/sticky/default_profile_images/default_profile_0_normal.png",
+        "profile_use_background_image": true,
+        "listed_count": 3,
+        "profile_text_color": "333333",
+        "lang": "en",
+        "followers_count": 29,
+        "protected": false,
+        "profile_background_image_url_https": "https://si0.twimg.com/images/themes/theme1/bg.png",
+        "verified": false,
+        "geo_enabled": false,
+        "notifications": false,
+        "time_zone": "Pacific Time (US & Canada)",
+        "description": "I just came for the lists.",
+        "profile_background_color": "C0DEED",
+        "profile_background_image_url": "http://a0.twimg.com/images/themes/theme1/bg.png",
+        "default_profile_image": true,
+        "statuses_count": 3,
+        "friends_count": 146,
+        "screen_name": "meetmarshall",
+        "following": false,
+        "show_all_inline_media": false
+      },
+      "following": false
+    }
+  ],
+  "previous_cursor_str": "0",
+  "next_cursor": 1364811190668631091,
+  "next_cursor_str": "1364811190668631091"
+}
 ```
 
 ## lists/create
