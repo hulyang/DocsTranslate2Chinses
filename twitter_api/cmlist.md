@@ -52,10 +52,34 @@
 	* [接口资源信息](#接口资源信息-11)
 	* [参数信息](#参数信息-11)
 	* [响应内容](#响应内容-11)
-* [lists/update](#listsupdate)
+* [lists/members/create](#listsmemberscreate)
 	* [接口资源信息](#接口资源信息-12)
 	* [参数信息](#参数信息-12)
 	* [响应内容](#响应内容-12)
+* [lists/members/create_all](#listsmemberscreate_all)
+	* [接口资源信息](#接口资源信息-13)
+	* [参数信息](#参数信息-13)
+	* [响应内容](#响应内容-13)
+* [lists/members/destroy](#listsmembersdestroy)
+	* [接口资源信息](#接口资源信息-14)
+	* [参数信息](#参数信息-14)
+	* [响应内容](#响应内容-14)
+* [lists/members/create_all](#listsmemberscreate_all-1)
+	* [接口资源信息](#接口资源信息-15)
+	* [参数信息](#参数信息-15)
+	* [响应内容](#响应内容-15)
+* [lists/subscribers/create](#listssubscriberscreate)
+	* [接口资源信息](#接口资源信息-16)
+	* [参数信息](#参数信息-16)
+	* [响应内容](#响应内容-16)
+* [lists/subscribers/destroy](#listssubscribersdestroy)
+	* [接口资源信息](#接口资源信息-17)
+	* [参数信息](#参数信息-17)
+	* [响应内容](#响应内容-17)
+* [lists/update](#listsupdate)
+	* [接口资源信息](#接口资源信息-18)
+	* [参数信息](#参数信息-18)
+	* [响应内容](#响应内容-18)
 
 <!-- /code_chunk_output -->
 
@@ -1859,6 +1883,254 @@ https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api
    "uri":"/kurrik/goonies"
 }
 ```
+
+## lists/members/create
+
+向指定list中添加一名成员。身份认证用户必须拥有该list才能向其中添加成员。__一个list成员数量不得超过5000人__。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-create
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/lists/members/create.json|
+|:------|:-----|
+|Method|POST|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|list_id|必要|list的数字ID。(`list_id`&#124;`slug`二选一即可)||
+|slug|必要|list的slug。如果使用此参数，必须再使用`owner_id`或`owner_screen_name`去指明其拥有者||
+|user_id|必要|待添加的用户ID。当用户id与昵称相同时，有助于消除歧义||
+|screen_name|必要|待添加的用户昵称。当用户id与昵称相同时，有助于消除歧义||
+|owner_screen_name|可选|list拥有者的账号名称||
+|owner_id|可选|list拥有者的账号ID||
+
+### 响应内容
+
+## lists/members/create_all
+
+通过使用英文半角逗号(`,`)隔开一组用户id或用户昵称的方式，向指定list中添加多名成员。身份认证用户必须拥有该list才能向其中添加成员。__一个list成员数量不得超过5000人，且单次请求最多向list中添加100名成员__。
+
+另需注意快速的增删list的成员可能会存在一定问题。所以，调用此接口是需要注意别迅速的对同一个list做增删成员的操作。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-create_all
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/lists/members/create_all.json|
+|:------|:-----|
+|Method|POST|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|list_id|必要|list的数字ID。(`list_id`&#124;`slug`二选一即可)||
+|slug|必要|list的slug。如果使用此参数，必须再使用`owner_id`或`owner_screen_name`去指明其拥有者||
+|user_id|可选|用逗号分割的多个用户ID，单次请求最多100个||
+|screen_name|可选|用逗号分割的多个用户昵称，单次请求最多100个||
+|owner_screen_name|可选|list拥有者的账号名称||
+|owner_id|可选|list拥有者的账号ID||
+
+### 响应内容
+
+## lists/members/destroy
+
+从指定list中删除一名成员。身份认证用户必须拥有该list才能从其中删除成员。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-destroy
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/lists/members/destroy.json|
+|:------|:-----|
+|Method|POST|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|list_id|可选|list的数字ID。(`list_id`&#124;`slug`二选一即可)||
+|slug|可选|list的slug。如果使用此参数，必须再使用`owner_id`或`owner_screen_name`去指明其拥有者||
+|user_id|可选|要删除的用户id。当用户id与昵称相同时，有助于消除歧义||
+|screen_name|可选|要删除的用户昵称。当用户id与昵称相同时，有助于消除歧义||
+|owner_screen_name|可选|list拥有者的账号名称||
+|owner_id|可选|list拥有者的账号ID||
+
+### 响应内容
+
+## lists/members/create_all
+
+通过使用英文半角逗号(`,`)隔开一组用户ID或用户昵称的方式，从指定list中移除多名成员。身份认证用户必须拥有该list才能从其中移除成员。__该list成员数量不得超过500人，且单次请求最多向list中添加100名成员__。
+
+另需注意快速的增删list的成员可能会存在一定问题。所以，调用此接口是需要注意别迅速的对同一个list做增删成员的操作。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-destroy_all
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/lists/members/destroy_all.json|
+|:------|:-----|
+|Method|POST|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|list_id|必要|list的数字ID。(`list_id`&#124;`slug`二选一即可)||
+|slug|必要|list的slug。如果使用此参数，必须再使用`owner_id`或`owner_screen_name`去指明其拥有者||
+|user_id|可选|用逗号分割的多个用户ID，单次请求最多100个||
+|screen_name|可选|用逗号分割的多个用户昵称，单次请求最多100个||
+|owner_screen_name|可选|list拥有者的账号名称||
+|owner_id|可选|list拥有者的账号ID||
+
+### 响应内容
+
+## lists/subscribers/create
+
+使用身份认证的账号去订阅指定list。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-subscribers-create
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/lists/subscribers/create.json|
+|:------|:-----|
+|Method|POST|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|list_id|必要|list的数字ID。(`list_id`&#124;`slug`二选一即可)||
+|slug|必要|list的slug。如果使用此参数，必须再使用`owner_id`或`owner_screen_name`去指明其拥有者||
+|owner_screen_name|可选|list拥有者的账号名称||
+|owner_id|可选|list拥有者的账号ID||
+
+### 响应内容
+
+该list的详细信息(JSON格式)。
+
+```
+{
+   "created_at":"Wed Sep 23 01:18:01 +0000 2009",
+   "slug":"team",
+   "name":"Team",
+   "full_name":"@twitter/team",
+   "description":"",
+   "mode":"public",
+   "following":false,
+   "user":{
+      "geo_enabled":true,
+      "profile_background_color":"ACDED6",
+      "protected":false,
+      "profile_background_tile":false,
+      "created_at":"Tue Feb 20 14:35:54 +0000 2007",
+      "profile_image_url_https":"https://si0.twimg.com/profile_images/1124040897/at-twitter_normal.png",
+      "name":"Twitter",
+      "favourites_count":16,
+      "profile_sidebar_fill_color":"F6F6F6",
+      "default_profile_image":false,
+      "notifications":false,
+      "utc_offset":-28800,
+      "description":"Always wondering what's happening. ",
+      "display_url":null,
+      "deactivated_bit":false,
+      "statuses_count":1218,
+      "following":false,
+      "verified":true,
+      "profile_sidebar_border_color":"EEEEEE",
+      "followers_count":6619949,
+      "profile_image_url":"http://a0.twimg.com/profile_images/1124040897/at-twitter_normal.png",
+      "contributors_enabled":true,
+      "follow_request_sent":false,
+      "profile_use_background_image":true,
+      "location":"San Francisco, CA",
+      "id_str":"783214",
+      "is_translator":false,
+      "show_all_inline_media":true,
+      "profile_text_color":"333333",
+      "screen_name":"twitter",
+      "profile_background_image_url":"http://a1.twimg.com/images/themes/theme18/bg.gif",
+      "url":"http://blog.twitter.com/",
+      "expanded_url":null,
+      "default_profile":false,
+      "profile_background_image_url_https":"https://si0.twimg.com/images/themes/theme18/bg.gif",
+      "time_zone":"Pacific Time (US & Canada)",
+      "profile_link_color":"038543",
+      "id":783214,
+      "entities":{
+         "urls":[
+
+         ],
+         "user_mentions":[
+
+         ],
+         "hashtags":[
+
+         ]
+      },
+      "suspended":false,
+      "listed_count":66018,
+      "lang":"en",
+      "friends_count":695
+   },
+   "member_count":643,
+   "id_str":"574",
+   "subscriber_count":76779,
+   "id":574,
+   "uri":"/twitter/team"
+}
+```
+
+## lists/subscribers/destroy
+
+使用身份认证的账号去取消指定list的订阅。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-subscribers-destroy
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/lists/subscribers/destroy.json|
+|:------|:-----|
+|Method|POST|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|list_id|必要|list的数字ID。(`list_id`&#124;`slug`二选一即可)||
+|slug|必要|list的slug。如果使用此参数，必须再使用`owner_id`或`owner_screen_name`去指明其拥有者||
+|owner_screen_name|可选|list拥有者的账号名称||
+|owner_id|可选|list拥有者的账号ID||
+
+### 响应内容
 
 ## lists/update
 

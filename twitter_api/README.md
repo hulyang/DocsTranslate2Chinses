@@ -22,12 +22,12 @@
 -  [GET lists/subscriptions](cmlist.md#listssubscriptions)
 -  [POST lists/create](cmlist.md#listscreate)
 -  [POST lists/destroy](cmlist.md#listsdestroy)
--  POST lists/members/create
--  POST lists/members/create_all
--  POST lists/members/destroy
--  POST lists/members/destroy_all
--  POST lists/subscribers/create
--  POST lists/subscribers/destroy
+-  [POST lists/members/create](cmlist.md#listsmemberscreate)
+-  [POST lists/members/create_all](cmlist.md#listsmemberscreate_all)
+-  [POST lists/members/destroy](cmlist.md#listsmembersdestroy)
+-  [POST lists/members/destroy_all](cmlist.md#listsmembersdestroy_all)
+-  [POST lists/subscribers/create](cmlist.md#listssubscriberscreate)
+-  [POST lists/subscribers/destroy](cmlist.md#listssubscribersdestroy)
 -  [POST lists/update](cmlist.md#listsupdate)
 ### Follow, search, and get users
 -  GET followers/ids
