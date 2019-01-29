@@ -30,15 +30,15 @@
 -  [POST lists/subscribers/destroy](cmlist.md#listssubscribersdestroy)
 -  [POST lists/update](cmlist.md#listsupdate)
 ### Follow, search, and get users
--  GET followers/ids
--  GET followers/list
--  GET friends/ids
--  GET friends/list
--  GET friendships/incoming
--  GET friendships/lookup
--  GET friendships/no_retweets/ids
--  GET friendships/outgoing
--  GET friendships/show
+-  [GET followers/ids](fsguser.md#followersids)
+-  [GET followers/list](fsguser.md#followerslist)
+-  [GET friends/ids](fsguser.md#friendsids)
+-  [GET friends/list](fsguser.md#friendslist)
+-  [GET friendships/incoming](fsguser.md#friendshipsincoming)
+-  [GET friendships/lookup](fsguser.md#friendshipslookup)
+-  [GET friendships/no_retweets/ids](fsguser.md#friendshipsno_retweetsids)
+-  [GET friendships/outgoing](fsguser.md#friendshipsoutgoing)
+-  [GET friendships/show](fsguser.md#friendshipsshow)
 -  GET users/lookup
 -  GET users/search
 -  GET users/show
