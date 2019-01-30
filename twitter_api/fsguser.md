@@ -40,6 +40,30 @@
 	* [接口资源信息](#接口资源信息-8)
 	* [参数信息](#参数信息-8)
 	* [响应内容](#响应内容-8)
+* [users/lookup](#userslookup)
+	* [接口资源信息](#接口资源信息-9)
+	* [参数信息](#参数信息-9)
+	* [响应内容](#响应内容-9)
+* [users/search](#userssearch)
+	* [接口资源信息](#接口资源信息-10)
+	* [参数信息](#参数信息-10)
+	* [响应内容](#响应内容-10)
+* [users/show](#usersshow)
+	* [接口资源信息](#接口资源信息-11)
+	* [参数信息](#参数信息-11)
+	* [响应内容](#响应内容-11)
+* [users/suggestions](#userssuggestions)
+	* [接口资源信息](#接口资源信息-12)
+	* [参数信息](#参数信息-12)
+	* [响应内容](#响应内容-12)
+* [users/suggestions/:slug](#userssuggestionsslug)
+	* [接口资源信息](#接口资源信息-13)
+	* [参数信息](#参数信息-13)
+	* [响应内容](#响应内容-13)
+* [users/suggestions/:slug/members](#userssuggestionsslugmembers)
+	* [接口资源信息](#接口资源信息-14)
+	* [参数信息](#参数信息-14)
+	* [响应内容](#响应内容-14)
 
 <!-- /code_chunk_output -->
 
@@ -559,4 +583,399 @@ https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users
     }
   }
 }
+```
+
+## users/lookup
+
+返回指定（通过英文半角逗号`,`分割的`user_id`或`screen_name`）的完整的[用户信息](https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/user-object)集合，单次请求最多返回100个。
+
+此接口配合[GET friends/ids](#friendsids)或[GET followers/ids](#followersids)所返回的用户ID集合去使用时，效果甚佳。
+
+[GET users/show](#usersshow)接口是用来返回单个用户信息的。
+
+调用此接口需要注意以下事项：
+
+- 必须要关注了受保护用户才能看到该用户的推文更新，否则其推文信息将被移除。
+- 返回的用户信息顺序与请求中ID或昵称顺序不一定一致。
+- 如果请求中的某个用户不存在、被冻结、已删除的话是不会被返回。
+- 如果没有满足查询条件的用户信息，则会返回HTTP 404。
+- 强烈建议请求信息大的时候使用POST请求
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-lookup
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/users/lookup.json|
+|:------|:-----|
+|Method|GET|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/15-min (user auth)|900|
+|请求次数/15-min (app auth)|300|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|screen_name|可选|使用英文半角逗号(`,`)隔开的用户昵称集合，单次请求最多100个。请求量大的时候强烈建议使用POST请求||
+|user_id|可选|使用英文半角逗号(`,`)隔开的用户ID集合，单次请求最多100个。请求量大的时候强烈建议使用POST请求||
+|include_entities|可选|是否包含`entities`节点。可以通过设置`include_entities=false`来取消包含该节点。||
+|tweet_mode|可选|推文展示模式（`compat`&#124;`extended`）||
+
+### 响应内容
+
+用户信息集合（JSON数组）。
+
+```
+[
+  {
+    {user-object},
+    {user-object}
+  }
+]
+```
+
+## users/search
+
+为Twitter账号提供一个简单的，基于相关性的搜索接口。查询会基于兴趣、昵称、公司名称、位置或一些其他标准。不支持完全匹配搜索。
+
+仅返回前1000条匹配结果。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-search
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/users/search.json|
+|:------|:-----|
+|Method|GET|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/15-min (user auth)|900|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|q|必要|用于账号搜索的关键词||
+|page|可选|指定分页页码||
+|count|可选|每页返回的账号信息条数，最大值为20||
+|include_entities|可选|是否包含`entities`节点。可以通过设置`include_entities=false`来取消包含该节点。||
+
+### 响应内容
+
+匹配到的账号信息集合（JSON数组）
+
+```
+[
+  {user-object},
+  {user-object}
+]
+```
+
+## users/show
+
+返回参数`user_id`或`screen_name`指定的[用户信息](https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/user-object)，该用户的最新推文也可能包含在内。
+
+[GET users/lookup](#userslookup)可用来批量返回用户信息。
+
+必须要关注了受保护用户才能看到该用户的推文更新，否则其推文信息将被移除。最新的推文不一定会返回。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-show
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/users/show.json|
+|:------|:-----|
+|Method|GET|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/15-min (user auth)|900|
+|请求次数/15-min (app auth)|900|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|user_id|必要|用于账号搜索的关键词||
+|screen_name|可选|指定分页页码||
+|include_entities|可选|是否包含`entities`节点。可以通过设置`include_entities=false`来取消包含该节点。||
+
+### 响应内容
+
+Twitter账号[详细信息](https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/user-object)。
+
+```
+{user-object}
+```
+
+## users/suggestions
+
+访问Twitter用户推荐列表。将会返回推荐的用户类别集合。这些类别可用来调用[GET users/suggestions/:slug](#users/suggestions/:slug)来获取该类别下的推荐用户信息。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-suggestions
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/users/suggestions.json|
+|:------|:-----|
+|Method|GET|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/15-min (user auth)|15|
+|请求次数/15-min (app auth)|15|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|lang|可选|语种。指定建议类别的语种。该语种必须遵循双字母ISO 639-1的规定。可以调用[GET help/languages](https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-suggestions)查看目前支持的语种。不支持的语种将会按英语(en)返回。如果你在此接口中使用了此参数，须确保在调用[GET users/suggestions/:slug](#userssuggestionsslug)时也包含此参数。||
+
+### 响应内容
+
+推荐的分类集合（JSON数组）。
+
+```
+[
+  {
+    "name": "Art & Design",
+    "slug": "art-design",
+    "size": 20
+  },
+  {
+    "name": "Billboard Music Awards",
+    "slug": "billboard-music-awards",
+    "size": 20
+  },
+  {
+    "name": "Books",
+    "slug": "books",
+    "size": 20
+  },
+  {
+    "name": "Business",
+    "slug": "business",
+    "size": 20
+  },
+  {
+    "name": "CMT Awards",
+    "slug": "cmt-awards",
+    "size": 20
+  },
+  {
+    "name": "Charity",
+    "slug": "charity",
+    "size": 20
+  },
+  {
+    "name": "Entertainment",
+    "slug": "entertainment",
+    "size": 20
+  },
+  {
+    "name": "Faith and Religion",
+    "slug": "faith-and-religion",
+    "size": 20
+  },
+  {
+    "name": "Family",
+    "slug": "family",
+    "size": 20
+  },
+  {
+    "name": "Fashion",
+    "slug": "fashion",
+    "size": 20
+  },
+  {
+    "name": "Food & Drink",
+    "slug": "food-drink",
+    "size": 20
+  },
+  {
+    "name": "Funny",
+    "slug": "funny",
+    "size": 20
+  },
+  {
+    "name": "Government",
+    "slug": "government",
+    "size": 20
+  },
+  {
+    "name": "Health",
+    "slug": "health",
+    "size": 20
+  },
+  {
+    "name": "MLB",
+    "slug": "mlb",
+    "size": 20
+  },
+  {
+    "name": "MTV Movie Awards",
+    "slug": "mtv-movie-awards",
+    "size": 20
+  },
+  {
+    "name": "Music",
+    "slug": "music",
+    "size": 20
+  },
+  {
+    "name": "NASCAR",
+    "slug": "nascar",
+    "size": 20
+  },
+  {
+    "name": "NBA",
+    "slug": "nba",
+    "size": 20
+  },
+  {
+    "name": "NHL",
+    "slug": "nhl",
+    "size": 20
+  },
+  {
+    "name": "News",
+    "slug": "news",
+    "size": 20
+  },
+  {
+    "name": "PGA",
+    "slug": "pga",
+    "size": 20
+  },
+  {
+    "name": "Science",
+    "slug": "science",
+    "size": 20
+  },
+  {
+    "name": "Sports",
+    "slug": "sports",
+    "size": 20
+  },
+  {
+    "name": "Staff Picks",
+    "slug": "staff-picks",
+    "size": 20
+  },
+  {
+    "name": "Technology",
+    "slug": "technology",
+    "size": 20
+  },
+  {
+    "name": "Television",
+    "slug": "television",
+    "size": 20
+  },
+  {
+    "name": "Travel",
+    "slug": "travel",
+    "size": 20
+  },
+  {
+    "name": "Twitter",
+    "slug": "twitter",
+    "size": 20
+  },
+  {
+    "name": "US Election 2012",
+    "slug": "us-election-2012",
+    "size": 20
+  }
+]
+```
+
+## users/suggestions/:slug
+
+访问指定类别中的Twitter推荐用户信息。
+
+建议程序缓存此数据的时间不要超过1小时。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-suggestions-slug
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/users/suggestions/:slug.json|
+|:------|:-----|
+|Method|GET|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/15-min (user auth)|15|
+|请求次数/15-min (app auth)|15|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|slug|必要|分类的简称||
+|lang|可选|语种。指定建议类别的语种。该语种必须遵循双字母ISO 639-1的规定。可以调用[GET help/languages](https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-suggestions)查看目前支持的语种。不支持的语种将会按英语(en)返回。如果你在此接口中使用了此参数，须确保在调用[GET users/suggestions](#userssuggestions)时也包含此参数。||
+
+### 响应内容
+
+该推荐分类的详细信息，包含推荐的用户集合。
+
+```
+{
+  "name": "Twitter",
+  "slug": "twitter",
+  "size": 20,
+  "users": [
+    {user-object},
+    {user-object},
+    {user-object}
+  ]
+}
+```
+
+## users/suggestions/:slug/members
+
+访问指定类别中的Twitter推荐用户信息，如果该用户不是受保护的用户，则会同时返回其最新的推文信息。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-suggestions-slug-members
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/users/suggestions/:slug/members.json|
+|:------|:-----|
+|Method|GET|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/15-min (user auth)|15|
+|请求次数/15-min (app auth)|15|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|slug|必要|分类的简称||
+
+### 响应内容
+
+包含推荐的用户信息集合（JSON数组）。
+
+```
+[
+  {user-object,
+    "status": {tweet-object}
+  },
+  {user-object,
+    "status": {tweet-object}
+  }
+]
 ```
