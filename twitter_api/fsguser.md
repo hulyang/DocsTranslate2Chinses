@@ -64,6 +64,18 @@
 	* [接口资源信息](#接口资源信息-14)
 	* [参数信息](#参数信息-14)
 	* [响应内容](#响应内容-14)
+* [friendships/create](#friendshipscreate)
+	* [接口资源信息](#接口资源信息-15)
+	* [参数信息](#参数信息-15)
+	* [响应内容](#响应内容-15)
+* [friendships/destroy](#friendshipsdestroy)
+	* [接口资源信息](#接口资源信息-16)
+	* [参数信息](#参数信息-16)
+	* [响应内容](#响应内容-16)
+* [friendships/update](#friendshipsupdate)
+	* [接口资源信息](#接口资源信息-17)
+	* [参数信息](#参数信息-17)
+	* [响应内容](#响应内容-17)
 
 <!-- /code_chunk_output -->
 
@@ -978,4 +990,136 @@ https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users
     "status": {tweet-object}
   }
 ]
+```
+
+## friendships/create
+
+使用身份认证的账号去关注参数中指定的账号。
+
+关注成功后将会返回该账号信息。失败的话则会返回失败原因。如果已经关注了可能返回HTTP`403`状态码，出于性能考虑也可以返回HTTP`200`。
+
+此接口实现为异步的，但最终结果一致。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/post-friendships-create
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/friendships/create.json|
+|:------|:-----|
+|Method|POST|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+|请求次数/24-hour window|1000|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|screen_name|可选|用户昵称||
+|user_id|可选|用户ID||
+|follow|可选|通知目标用户||
+
+### 响应内容
+
+目标用户信息。
+
+```
+{user-object,
+  "status": {tweet-object}
+}
+```
+
+## friendships/destroy
+
+使用身份认证的账号去取消关注参数中指定的账号。
+
+成功后将会返回该账号信息。失败的话则会返回失败原因。
+
+此接口实现为异步的，但最终结果一致。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/post-friendships-destroy
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/friendships/destroy.json|
+|:------|:-----|
+|Method|POST|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|screen_name|可选|用户昵称||
+|user_id|可选|用户ID||
+
+### 响应内容
+
+目标用户信息。
+
+```
+{user-object,
+  "status": {tweet-object}
+}
+```
+
+## friendships/update
+
+启用和禁用指定用户的转发和通知功能。
+
+官方文档地址：
+https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/post-friendships-update
+
+### 接口资源信息
+
+|URL|https://api.twitter.com/1.1/friendships/update.json|
+|:------|:-----|
+|Method|POST|
+|响应格式|JSON|
+|是否需要认证|是|
+|是否有访问限制|是|
+
+### 参数信息
+
+|参数名称|必要性|描述|默认值|
+|:------|:------|:------|:------|
+|screen_name|可选|用户昵称||
+|user_id|可选|用户ID||
+|device|可选|启用&#124;禁用设备通知功能。（`true`&#124;`false`）||
+|retweets|可选|启用&#124;禁用转发功能。（`true`&#124;`false`）||
+
+### 响应内容
+
+身份认证账号与指定用户之间的关系信息。
+
+```
+{
+  "relationship": {
+    "target": {
+      "id_str": "2244994945",
+      "id": 2244994945,
+      "followed_by": true,
+      "screen_name": "twitterdev",
+      "following": true
+    },
+    "source": {
+      "can_dm": true,
+      "blocking": false,
+      "id_str": "819797",
+      "all_replies": false,
+      "want_retweets": true,
+      "id": 819797,
+      "marked_spam": false,
+      "followed_by": true,
+      "notifications_enabled": true,
+      "screen_name": "episod",
+      "following": true
+    }
+  }
+}
 ```

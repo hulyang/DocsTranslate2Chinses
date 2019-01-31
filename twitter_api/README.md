@@ -45,9 +45,9 @@
 -  [GET users/suggestions](fsguser.md#userssuggestions)
 -  [GET users/suggestions/:slug](fsguser.md#userssuggestionsslug)
 -  [GET users/suggestions/:slug/members](fsguser.md#userssuggestionsslugmembers)
--  POST friendships/create
--  POST friendships/destroy
--  POST friendships/update
+-  [POST friendships/create](fsguser.md#friendshipscreate)
+-  [POST friendships/destroy](fsguser.md#friendshipsdestroy)
+-  [POST friendships/update](fsguser.md#friendshipsupdate)
 ### Manage account settings and profile
 -  GET account/settings
 -  GET account/verify_credentials
