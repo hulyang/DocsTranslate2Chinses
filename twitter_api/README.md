@@ -29,7 +29,7 @@
 -  [POST lists/subscribers/create](cmlist.md#listssubscriberscreate)
 -  [POST lists/subscribers/destroy](cmlist.md#listssubscribersdestroy)
 -  [POST lists/update](cmlist.md#listsupdate)
-### Follow, search, and get users
+### [Follow, search, and get users](fsguser.md#follow-search-and-get-users)
 -  [GET followers/ids](fsguser.md#followersids)
 -  [GET followers/list](fsguser.md#followerslist)
 -  [GET friends/ids](fsguser.md#friendsids)
